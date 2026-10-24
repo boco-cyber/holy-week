@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#34251d">
+  <meta name="description" content="Walk through Holy Week, hour by hour. Read the Gospels and spiritual reflections in English and Arabic.">
+  <title>Holy Week · Hour by Hour</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#reading">Skip to reading</a>
+<header class="masthead">
+  <a class="brand" href="https://copticfaith.org"><span aria-hidden="true">✥</span> <span id="brand">Coptic Faith</span></a>
+  <nav aria-label="Language"><a href="?lang=en" lang="en" id="en">English</a><span aria-hidden="true">/</span><a href="?lang=ar" lang="ar" id="ar">العربية</a></nav>
+</header>
+<section class="hero">
+  <p class="eyebrow" id="eyebrow">THE JOURNEY TO THE RESURRECTION</p>
+  <h1 id="title">Holy Week<span>Hour by hour.</span></h1>
+  <p id="subtitle">The Gospels and spiritual reflections for each hour of the Pascha journey.</p>
+  <div class="hero-foot"><span id="edition">ENGLISH & ARABIC · 7 DAYS · 59 READINGS</span><a href="/api/v1/book?lang=en" id="api">Public readings API ↗</a></div>
+</section>
+<main class="workspace">
+  <aside class="sidebar" aria-label="Readings">
+    <label for="search" id="search-label">Find a reading</label>
+    <input id="search" type="search" maxlength="200" placeholder="Search the Gospels…">
+    <label for="day" id="day-label">Day of Holy Week</label>
+    <select id="day"><option value="">All days</option></select>
+    <p id="count" class="count" role="status">Loading readings…</p>
+    <div id="list" class="reading-list"></div>
+  </aside>
+  <article id="reading" class="reading" tabindex="-1" aria-busy="true">
+    <p class="eyebrow" id="reading-day"></p>
+    <h2 id="reading-title">A moment for reflection</h2>
+    <div class="reader-tools"><span id="reference"></span><div><button id="smaller" aria-label="Decrease text size">A−</button><button id="larger" aria-label="Increase text size">A+</button><button id="print">Print</button></div></div>
+    <div id="passage" class="passage"></div>
+    <h3 id="commentary-title"></h3>
+    <div id="commentary" class="commentary"></div>
+    <nav class="reading-nav" aria-label="Reading navigation"><button id="previous">Previous</button><button id="next">Next</button></nav>
+    <p id="error" role="alert" hidden></p><button id="retry" hidden>Try again</button>
+  </article>
+</main>
+<footer><span id="footer">Holy Week · Coptic Faith Explained</span><a href="https://github.com/boco-cyber/holy-week" id="source">Source on GitHub ↗</a></footer>
+</body>
+</html>
