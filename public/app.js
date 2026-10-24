@@ -80,11 +80,11 @@ function filter() {
 async function load() {
   $('error').hidden = true; $('retry').hidden = true; $('reading').setAttribute('aria-busy', 'true');
   try {
-    const response = await fetch(`/api/v1/book?lang=${lang}`, { signal: AbortSignal.timeout(15000) });
+    const response = await fetch(`/api/v1/book?lang=${lang}`, { cache: 'no-cache', signal: AbortSignal.timeout(15000) });
     if (!response.ok) throw new Error('HTTP ' + response.status);
     const { data } = await response.json();
     const intro = data.introduction;
-    all = [{ ...data.overview, id: 'overview', day: copy.intro, day_index: 0, hour_heading: data.overview.title }, { id: 'introduction', author: intro.author, day: copy.intro, day_index: 0, hour_heading: intro.title, commentary_title: intro.commentary_title, commentary_body: intro.commentary_body },
+    all = [...(data.overview ? [{ ...data.overview, id: 'overview', day: copy.intro, day_index: 0, hour_heading: data.overview.title }] : []), { id: 'introduction', author: intro.author, day: copy.intro, day_index: 0, hour_heading: intro.title, commentary_title: intro.commentary_title, commentary_body: intro.commentary_body },
       ...data.days.flatMap((day, di) => day.hours.map((hour, hi) => ({ ...hour, id: `day-${di + 1}-hour-${hi + 1}`, day: day.day, day_index: di + 1 })))];
     all.forEach(entry => { entry.search = normalize(JSON.stringify(entry)); });
     $('day').replaceChildren(new Option(copy.allDays, ''), new Option(copy.intro, '0'), ...data.days.map((day, i) => new Option(day.day, String(i + 1))));
