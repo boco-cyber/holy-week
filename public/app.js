@@ -48,7 +48,7 @@ function select(id, focus = false) {
   active = entry.id;
   $('reading-day').textContent = entry.day;
   $('reading-title').textContent = entry.hour_heading || entry.commentary_title;
-  $('reference').textContent = entry.scripture_reference || '';
+  $('reference').textContent = entry.scripture_reference || entry.author || '';
   $('commentary-title').textContent = entry.commentary_title || '';
   paragraphs('passage', entry.biblical_passage); paragraphs('commentary', entry.commentary_body);
   $('reading').setAttribute('aria-busy', 'false');
@@ -84,7 +84,7 @@ async function load() {
     if (!response.ok) throw new Error('HTTP ' + response.status);
     const { data } = await response.json();
     const intro = data.introduction;
-    all = [{ id: 'introduction', day: copy.intro, day_index: 0, hour_heading: intro.title, commentary_title: intro.commentary_title, commentary_body: intro.commentary_body },
+    all = [{ ...data.overview, id: 'overview', day: copy.intro, day_index: 0, hour_heading: data.overview.title }, { id: 'introduction', author: intro.author, day: copy.intro, day_index: 0, hour_heading: intro.title, commentary_title: intro.commentary_title, commentary_body: intro.commentary_body },
       ...data.days.flatMap((day, di) => day.hours.map((hour, hi) => ({ ...hour, id: `day-${di + 1}-hour-${hi + 1}`, day: day.day, day_index: di + 1 })))];
     all.forEach(entry => { entry.search = normalize(JSON.stringify(entry)); });
     $('day').replaceChildren(new Option(copy.allDays, ''), new Option(copy.intro, '0'), ...data.days.map((day, i) => new Option(day.day, String(i + 1))));

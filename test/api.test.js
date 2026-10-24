@@ -11,7 +11,7 @@ test('complete bilingual datasets and stable aligned reading IDs', async () => {
     const { data, meta } = await (await fetch(`${base}/api/v1/book?lang=${lang}`)).json();
     assert.equal(meta.lang, lang); assert.equal(data.days.length, 7);
     assert.equal(data.days.reduce((sum, day) => sum + day.hours.length, 0), 59);
-    assert.ok(data.introduction.commentary_body.length); assert.equal(data.source_document, undefined);
+    assert.ok(data.introduction.commentary_body.length); assert.equal(data.overview.commentary_body.length, 5); assert.equal(data.source_document, undefined);
     const readings = await (await fetch(`${base}/api/v1/readings?lang=${lang}`)).json();
     ids.push(readings.data.map(entry => entry.id));
     assert.equal(readings.meta.total, 59);
